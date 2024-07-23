@@ -14,7 +14,7 @@ internal class Program {
         string projectDir = Directory.GetParent(workingDir).Parent.Parent.FullName;
         string[] directories = Directory.GetDirectories(projectDir);
 
-        // Find the directory with the highest number (year)
+        // Find the Year directory with the highest number
         string highestYear = directories
             .Select(Path.GetFileName)
             .Where(name => int.TryParse(name, out _))
@@ -22,14 +22,21 @@ internal class Program {
             .FirstOrDefault() ?? throw new Exception("No valid year directories found");
 
         string yearDirectoryPath = Path.Combine(projectDir, highestYear);
-        string[] files = Directory.GetFiles(yearDirectoryPath, "Day*.cs");
+        string[] dayDirectories = Directory.GetDirectories(yearDirectoryPath, "Day*");
 
-        // Find the Day class with the highest number
+        // Find the Day directory with the highest number
+        string highestDayDirectory = dayDirectories
+            .Select(Path.GetFileName)
+            .Where(name => name.StartsWith("Day") && int.TryParse(name[3..], out _))
+            .OrderByDescending(name => int.Parse(name[3..]))
+            .FirstOrDefault() ?? throw new Exception("No valid Day directories found");
+
+        string highestDayClassName = highestDayDirectory;
+
+        // Find the Day class with the matching name
         Type highestDayType = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.Name.StartsWith("Day") && int.TryParse(t.Name[3..], out _))
-            .OrderByDescending(t => int.Parse(t.Name[3..]))
-            .FirstOrDefault() ?? throw new Exception("No valid Day classes found");
+            .FirstOrDefault(t => t.Name == highestDayClassName) ?? throw new Exception($"Day class {highestDayClassName} not found in assembly");
 
-        return highestDayType == null ? throw new Exception("Day class not found in assembly") : (dynamic)Activator.CreateInstance(highestDayType);
+        return Activator.CreateInstance(highestDayType);
     }
 }
