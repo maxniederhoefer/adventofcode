@@ -54,7 +54,7 @@ public class Day02 : IDay {
             ('B', 'Y') or // Paper vs Paper
             ('C', 'Z') => 3, // Scissors vs Scissors
 
-            _ => 0 // Loss
+            _ => 0 // Lose
         };
     }
 
