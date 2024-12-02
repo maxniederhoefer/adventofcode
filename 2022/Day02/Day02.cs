@@ -1,4 +1,4 @@
-﻿namespace adventofcode._2022.Day02;
+﻿namespace adventofcode._2022;
 
 public class Day02 : IDay {
     private const string path = "C:\\Users\\max.niederhoefer\\source\\2delete\\adventofcode\\2022\\Day02\\input.txt";
