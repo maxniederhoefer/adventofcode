@@ -9,18 +9,9 @@ public class Day01 : IDay {
 
         foreach (string line in File.ReadLines(path)) {
             string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2) {
-                continue;
-            }
 
-            if (int.TryParse(parts[0], out int left) && int.TryParse(parts[1], out int right)) {
-                leftList.Add(left);
-                rightList.Add(right);
-            }
-        }
-
-        if (leftList.Count != rightList.Count) {
-            return;
+            leftList.Add(int.Parse(parts[0]));
+            rightList.Add(int.Parse(parts[1]));
         }
 
         leftList.Sort();
@@ -31,7 +22,7 @@ public class Day01 : IDay {
             totalDistance += Math.Abs(leftList[i] - rightList[i]);
         }
 
-        Console.WriteLine("Part1: " + totalDistance);
+        Console.WriteLine("Part 1: " + totalDistance);
     }
 
     public void GetSecondPart() {
@@ -40,18 +31,13 @@ public class Day01 : IDay {
 
         foreach (string line in File.ReadLines(path)) {
             string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length != 2) {
-                continue;
-            }
 
-            if (int.TryParse(parts[0], out int left) && int.TryParse(parts[1], out int right)) {
-                leftList.Add(left);
-                rightList.Add(right);
-            }
+            leftList.Add(int.Parse(parts[0]));
+            rightList.Add(int.Parse(parts[1]));
         }
 
         int similarityScore = CalculateSimilarityScore(leftList, rightList);
-        Console.WriteLine($"Part2: " + similarityScore);
+        Console.WriteLine("Part 2: " + similarityScore);
     }
 
     static int CalculateSimilarityScore(List<int> leftList, List<int> rightList) {
