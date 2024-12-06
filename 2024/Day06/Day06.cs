@@ -32,6 +32,8 @@ public class Day06 : IDay {
         int posY = startY;
         HashSet<(int x, int y)> visited = new();
 
+        visited.Add((posX, posY));
+
         while (posX >= 0 && posX < map[0].Length && posY >= 0 && posY < map.Length) {
             int nextX = posX + directions[currentDirection].dx;
             int nextY = posY + directions[currentDirection].dy;
