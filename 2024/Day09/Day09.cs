@@ -79,7 +79,97 @@ public class Day09 : IDay {
     }
 
     public void GetSecondPart() {
-        throw new NotImplementedException();
+        string input = File.ReadAllText(path).Trim();
+
+        List<string> disk = new();
+        int fileId = 0;
+
+        for (int i = 0; i < input.Length; i += 2) {
+            if (i + 1 < input.Length) {
+                int fileSize = int.Parse(input[i].ToString());
+                int freeSize = int.Parse(input[i + 1].ToString());
+
+                for (int j = 0; j < fileSize; j++) {
+                    disk.Add(fileId.ToString());
+                }
+
+                for (int j = 0; j < freeSize; j++) {
+                    disk.Add(".");
+                }
+            } else {
+                int fileSize = int.Parse(input[i].ToString());
+
+                for (int j = 0; j < fileSize; j++) {
+                    disk.Add(fileId.ToString());
+                }
+            }
+
+            fileId++;
+        }
+
+        Console.WriteLine(string.Join("", disk));
+
+        List<string> newDisk = new(disk);
+
+        for (int i = newDisk.Count - 1; i >= 0;) {
+            if (newDisk[i] != ".") {
+                string currentFileId = newDisk[i];
+
+                int blockStart = i;
+                while (blockStart > 0 && newDisk[blockStart - 1] == currentFileId) {
+                    blockStart--;
+                }
+                int blockSize = i - blockStart + 1;
+
+                bool blockMoved = false;
+
+                for (int j = 0; j <= newDisk.Count - 1; j++) {
+                    if (j + blockSize > newDisk.Count || j + blockSize > blockStart) {
+                        break;
+                    }
+
+                    bool fits = true;
+                    for (int z = 0; z < blockSize; z++) {
+                        if (newDisk[j + z] != ".") {
+                            fits = false;
+                            break;
+                        }
+                    }
+
+                    if (fits) {
+                        for (int k = 0; k < blockSize; k++) {
+                            newDisk[j + k] = currentFileId;
+                        }
+
+                        for (int k = blockStart; k <= i; k++) {
+                            newDisk[k] = ".";
+                        }
+
+                        blockMoved = true;
+                        break;
+                    }
+                }
+
+                if (blockMoved) {
+                    //Console.WriteLine(string.Join("", newDisk));
+                    i--;
+                } else {
+                    i -= blockSize;
+                }
+            } else {
+                i--;
+            }
+        }
+
+        long checksum = 0;
+        for (int i = 0; i < newDisk.Count; i++) {
+            if (newDisk[i] != ".") {
+                int blockFileId = int.Parse(newDisk[i]);
+                checksum += (long)i * blockFileId;
+            }
+        }
+
+        Console.WriteLine("Part 2: " + checksum);
     }
 }
 
