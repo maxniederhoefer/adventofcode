@@ -3,7 +3,7 @@
 namespace adventofcode._2024;
 
 public class Day03 : IDay {
-    private const string path = "C:\\Users\\max.niederhoefer\\source\\2delete\\adventofcode\\2024\\Day03\\input.txt";
+    string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "2024", "Day03", "input.txt");
 
     public void GetFirstPart() {
         string pattern = @"mul\((\d{1,3}),(\d{1,3})\)";

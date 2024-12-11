@@ -1,7 +1,8 @@
 ﻿namespace adventofcode._2023;
 
 public class Day01 : IDay {
-    private const string path = "C:\\Users\\max.niederhoefer\\source\\2delete\\adventofcode\\2023\\Day01\\input.txt";
+    string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "2023", "Day01", "input.txt");
+
     public void GetFirstPart() {
         string[] lines = File.ReadAllLines(path);
         List<int> ints = new();
