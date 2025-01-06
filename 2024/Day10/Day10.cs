@@ -23,7 +23,20 @@ public class Day10 : IDay {
     }
 
     public void GetSecondPart() {
-        throw new NotImplementedException();
+        List<string> map = new(File.ReadAllLines(path));
+        int x = map.Count;
+        int y = map[0].Length;
+        int totalRating = 0;
+
+        for (int xx = 0; xx < x; xx++) {
+            for (int yy = 0; yy < y; yy++) {
+                if (map[xx][yy] == '0') {
+                    totalRating += CalculateTrailheadRating(map, xx, yy);
+                }
+            }
+        }
+
+        Console.WriteLine(totalRating);
     }
 
     public int CalculateTrailheadScore(List<string> map, int startX, int startY) {
@@ -54,6 +67,35 @@ public class Day10 : IDay {
         return score;
     }
 
-    
-}
+    public int CalculateTrailheadRating(List<string> map, int startX, int startY) {
+        int x = map.Count;
+        int y = map[0].Length;
+        bool[,] visited = new bool[x, y];
+        HashSet<string> trails = new();
 
+        void DFS(int cx, int cy, int currentHeight, string trail) {
+            if (cx < 0 || cy < 0 || cx >= x || cy >= y) return;
+            if (visited[cx, cy] || map[cx][cy] - '0' != currentHeight) return;
+
+            visited[cx, cy] = true;
+            trail += $"({cx},{cy})";
+
+            if (currentHeight == 9) {
+                trails.Add(trail);
+                visited[cx, cy] = false;
+                return;
+            }
+
+            DFS(cx + 1, cy, currentHeight + 1, trail);
+            DFS(cx - 1, cy, currentHeight + 1, trail);
+            DFS(cx, cy + 1, currentHeight + 1, trail);
+            DFS(cx, cy - 1, currentHeight + 1, trail);
+
+            visited[cx, cy] = false;
+        }
+
+        DFS(startX, startY, 0, "");
+
+        return trails.Count;
+    }
+}
