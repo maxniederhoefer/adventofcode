@@ -1,6 +1,4 @@
-﻿using static System.Formats.Asn1.AsnWriter;
-
-namespace adventofcode._2024;
+﻿namespace adventofcode._2024;
 
 public class Day10 : IDay {
     string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "2024", "Day10", "input.txt");
