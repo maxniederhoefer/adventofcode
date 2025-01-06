@@ -17,7 +17,7 @@ public class Day10 : IDay {
             }
         }
 
-        Console.WriteLine(totalScore);
+        Console.WriteLine("Part 1: " + totalScore);
     }
 
     public void GetSecondPart() {
@@ -34,7 +34,7 @@ public class Day10 : IDay {
             }
         }
 
-        Console.WriteLine(totalRating);
+        Console.WriteLine("Part 2: " + totalRating);
     }
 
     public int CalculateTrailheadScore(List<string> map, int startX, int startY) {
