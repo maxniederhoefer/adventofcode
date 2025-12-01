@@ -26,7 +26,26 @@ public class Day01 : IDay {
     }
 
     public void GetSecondPart() {
-        throw new NotImplementedException();
+        string[] rotations = File.ReadAllLines(path);
+
+        int position = 50;
+        int count = 0;
+
+        foreach (string rotation in rotations) {
+            char direction = rotation[0];
+            int point = int.Parse(rotation[1..]);
+
+            int dir = direction == 'L' ? -1 : 1;
+
+            for (int i = 1; i <= point; i++) {
+                position = (position + dir) % 100;
+                if (position < 0) position += 100;
+
+                if (position == 0) count++;
+            }
+        }
+
+        Console.WriteLine("Part 2: " + count);
     }
 }
 
